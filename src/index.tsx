@@ -7,6 +7,9 @@ import {observer} from 'mobservable-react';
 
 import "mobservable-react-devtools";
 
+import { TimerView, TimerModel } from './TimerDemo';
+import { TodoList, TodoStoreModel } from './TodoDemo';
+
 interface IDemoProps
 {
   name: string;
@@ -20,52 +23,15 @@ class Demo extends React.Component<IDemoProps, any> {
     return (
       <div>
         <div>Hello {this.props.name}!</div>
+        <hr/>
         <TimerView model={new TimerModel()}/>
+        <hr/>
+        <TodoList model={new TodoStoreModel()}/>
       </div>
     );
   }
 }
 
-interface ITimer
-{
-  secondsPassed: number;
-}
-
-class TimerModel
-{
-  constructor()
-  {
-    this.timer = observable<ITimer>(
-    {
-      secondsPassed: 0
-    });
-    
-    setInterval(() => this.timer.secondsPassed++, 1000);
-  }
-  
-  timer: ITimer;
-}
-
-interface ITimerProps
-{
-  model: TimerModel;
-}
-
-@observer
-class TimerView extends React.Component<ITimerProps, TimerModel>
-{
-  constructor(props: ITimerProps)
-  {
-    super(props);
-    this.state = props.model;
-  }
-  
-  render() {
-    return (
-      <span>Seconds passed: {this.state.timer.secondsPassed}</span>
-    )
-  }
-}
 
 function render() {
   ReactDOM.render(
