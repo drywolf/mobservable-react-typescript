@@ -7,19 +7,20 @@ import {observer} from 'mobservable-react';
 
 import "mobservable-react-devtools";
 
-class DemoProps {
-  public name: string;
+interface IDemoProps
+{
+  name: string;
 }
 
-class Demo extends React.Component<DemoProps, any> {
-  constructor(props: DemoProps) {
+class Demo extends React.Component<IDemoProps, any> {
+  constructor(props: IDemoProps) {
     super(props);
   }
   render() {
     return (
       <div>
         <div>Hello {this.props.name}!</div>
-        <Timer model={new TimerState()}/>
+        <TimerView model={new TimerModel()}/>
       </div>
     );
   }
@@ -30,7 +31,7 @@ interface ITimer
   secondsPassed: number;
 }
 
-class TimerState
+class TimerModel
 {
   constructor()
   {
@@ -47,11 +48,11 @@ class TimerState
 
 interface ITimerProps
 {
-  model: any;
+  model: TimerModel;
 }
 
 @observer
-class Timer extends React.Component<ITimerProps, TimerState>
+class TimerView extends React.Component<ITimerProps, TimerModel>
 {
   constructor(props: ITimerProps)
   {
