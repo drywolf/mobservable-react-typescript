@@ -15,25 +15,36 @@ interface IDemoProps
   name: string;
 }
 
-class Demo extends React.Component<IDemoProps, any> {
-  constructor(props: IDemoProps) {
+class Demo extends React.Component<IDemoProps, any>
+{
+  constructor(props: IDemoProps)
+  {
     super(props);
   }
-  render() {
+  
+  timer_model = new TimerModel();
+  todo_model = new TodoStoreModel();
+  
+  render()
+  {    
+    var todo_template = (item, key) => 
+      <div key={key}>Index: {key} Data: {item.text}</div>;
+    
     return (
       <div>
         <div>Hello {this.props.name}!</div>
         <hr/>
-        <TimerView model={new TimerModel()}/>
+        <TimerView model={this.timer_model}/>
         <hr/>
-        <TodoList model={new TodoStoreModel()}/>
+        <TodoList model={this.todo_model} item_template={todo_template}/>
       </div>
     );
   }
 }
 
 
-function render() {
+function render()
+{
   ReactDOM.render(
     <Demo name="World" />,
     document.getElementById('app')

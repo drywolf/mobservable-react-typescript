@@ -51,6 +51,7 @@ export class TodoStoreModel
 interface ITodoListProps
 {
   model: TodoStoreModel;
+  item_template?: (item: ITodoItem, key: any) => React.ReactElement<ITodoViewProps>;
 }
 
 @observer
@@ -67,11 +68,13 @@ export class TodoList extends React.Component<ITodoListProps, TodoStoreModel>
     render()
     {
         var model = this.props.model;
+        var item_template = this.props.item_template;
+        
         return (<div>
             { model.report() }
             <ul><hr/>
                 { model.todos.map(function(todo, idx) {
-                    return (<TodoView todo={ todo } key={ idx } />)
+                    return item_template ? item_template(todo, idx) : (<TodoView todo={ todo } key={ idx } />)
                 }) }
             <hr/></ul>
             <button onClick={ this.onNewTodo.bind(this) }>New Todo</button>
